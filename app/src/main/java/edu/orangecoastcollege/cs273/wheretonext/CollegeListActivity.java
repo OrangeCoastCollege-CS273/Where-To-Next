@@ -1,8 +1,10 @@
 package edu.orangecoastcollege.cs273.wheretonext;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.List;
@@ -32,18 +34,26 @@ public class CollegeListActivity extends AppCompatActivity {
         db.addCollege(new College("CSU Long Beach", 37430, 6452, 4.4, "csulb.png"));
 
         // TODO:  Fill the collegesList with all Colleges from the database
+        collegesList = db.getAllColleges();
         // TODO:  Connect the list adapter with the list
+        collegesListAdapter.addAll(collegesList);
         // TODO:  Set the list view to use the list adapter
+        collegesListView.setAdapter(collegesListAdapter);
     }
 
     public void viewCollegeDetails(View view) {
-
         // TODO: Implement the view college details using an Intent
+        startActivity(new Intent(this, CollegeDetailsActivity.class));
     }
 
     public void addCollege(View view) {
-
         // TODO: Implement the code for when the user clicks on the addCollegeButton
+        College newCollege = new College(-1,
+                ((EditText)findViewById(R.id.nameEditText)).getText().toString(),
+                Integer.valueOf(((EditText)findViewById(R.id.populationEditText)).getText().toString()),
+                Double.valueOf(((EditText)findViewById(R.id.tuitionEditText)).getText().toString()),
+                Double.valueOf(((EditText)findViewById(R.id.collegeRatingBar)).getText().toString()),
+                ((EditText)findViewById(R.id.collegeDetailsImageView)).getText().toString());
     }
 
 }

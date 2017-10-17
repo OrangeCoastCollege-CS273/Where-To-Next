@@ -2,6 +2,7 @@ package edu.orangecoastcollege.cs273.wheretonext;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -24,51 +25,63 @@ class DBHelper extends SQLiteOpenHelper {
     private static final String FIELD_IMAGE_NAME = "image_name";
 
 
-    public DBHelper(Context context){
-        super (context, DATABASE_NAME, null, DATABASE_VERSION);
+    public DBHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
-    public void onCreate (SQLiteDatabase database){
-
+    public void onCreate(SQLiteDatabase database) {
         // TODO:  Write code to create the database
-
+        String createTable = "CREATE TABLE " + DATABASE_TABLE +
+                " (" + KEY_FIELD_ID + " INTEGER PRIMARY KEY" +
+                ", " + FIELD_NAME + " STRING" +
+                ", " + FIELD_POPULATION + " INTEGER" +
+                ", " + FIELD_TUITION + " REAL" +
+                ", " + FIELD_RATING + " REAL" +
+                ", " + FIELD_IMAGE_NAME + " STRING"
+                + ")";
+        database.execSQL(createTable);
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase database,
-                          int oldVersion,
-                          int newVersion) {
-
+    public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
         // TODO:  Write code to upgrade the database
-
+        database.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE);
+        onCreate(database);
     }
 
     //********** DATABASE OPERATIONS:  ADD, GETALL
 
-    public long addCollege(College college) {
+    public void addCollege(College college) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-
         // TODO:  Write code to add a College to the database
         // TODO:  Return the id assigned by the database
-
-        return 0L;
+        if (college.getId() != -1) values.put(KEY_FIELD_ID, college.getId());
+        values.put(FIELD_NAME, college.getName());
+        values.put(FIELD_POPULATION, college.getPopulation());
+        values.put(FIELD_TUITION, college.getTuition());
+        values.put(FIELD_RATING, college.getRating());
+        values.put(FIELD_IMAGE_NAME, college.getImageName());
+        long id = db.insert(DATABASE_TABLE, null, values);
+        college.setId(id);
     }
 
     public ArrayList<College> getAllColleges() {
         ArrayList<College> collegeList = new ArrayList<>();
         SQLiteDatabase database = this.getReadableDatabase();
-
         // TODO:  Write the code to get all the colleges from the database.
+        Cursor cursor = database.query(DATABASE_TABLE, new String[] {KEY_FIELD_ID, FIELD_NAME, FIELD_POPULATION, FIELD_TUITION, FIELD_RATING, FIELD_IMAGE_NAME}, null, null,null, null, null, null);
 
+        if (cursor.moveToFirst()) {
+            do {
+                collegeList.add(new College(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getDouble(3), cursor.getDouble(4), cursor.getString(5)));
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
         return collegeList;
     }
-
-
-
-
-
 
 
 }
