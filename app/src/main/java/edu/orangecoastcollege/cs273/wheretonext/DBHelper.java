@@ -75,7 +75,7 @@ class DBHelper extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             do {
-                collegeList.add(new College(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getDouble(3), cursor.getDouble(4), cursor.getString(5)));
+                collegeList.add(new College(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getDouble(3), cursor.getFloat(4), cursor.getString(5)));
             }while (cursor.moveToNext());
         }
         cursor.close();
