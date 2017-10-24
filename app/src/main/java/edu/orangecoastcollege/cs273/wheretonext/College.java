@@ -15,7 +15,7 @@ public class College {
     private String mName;
     private int mPopulation;
     private double mTuition;
-    private double mRating;
+    private float mRating;
     private String mImageName;
 
     /**
@@ -34,7 +34,7 @@ public class College {
      * @param tuition The in-state tuition of the college per year.
      * @param rating The college rating (out of 5.0)
      */
-    public College(String name, int population, double tuition, double rating) {
+    public College(String name, int population, double tuition, float rating) {
         this(-1, name, population, tuition, rating, "college.png");
     }
 
@@ -46,7 +46,7 @@ public class College {
      * @param rating The college rating (out of 5.0)
      * @param imageName The image file name of the college
      */
-    public College(String name, int population, double tuition, double rating, String imageName) {
+    public College(String name, int population, double tuition, float rating, String imageName) {
         this(-1, name, population, tuition, rating, imageName);
     }
 
@@ -59,7 +59,7 @@ public class College {
      * @param rating The college rating (out of 5.0)
      * @param imageName The image file name of the college
      */
-    public College(int id, String name, int population, double tuition, double rating, String imageName) {
+    public College(int id, String name, int population, double tuition, float rating, String imageName) {
         mId = id;
         mName = name;
         mPopulation = population;
@@ -136,7 +136,7 @@ public class College {
      * Gets the rating of the <code>College</code>.
      * @return The rating (number of stars) of the game.
      */
-    public double getRating() {
+    public float getRating() {
         return mRating;
     }
 
@@ -144,7 +144,7 @@ public class College {
      * Sets the rating of the <code>College</code>.
      * @param rating The rating (number of stars) of the game.
      */
-    public void setRating(double rating) {
+    public void setRating(float rating) {
         mRating = rating;
     }
 
