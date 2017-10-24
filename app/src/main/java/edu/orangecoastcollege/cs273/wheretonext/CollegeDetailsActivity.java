@@ -14,8 +14,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.NumberFormat;
 
+/**
+ * Shows the various details of the {@link College}
+ */
 public class CollegeDetailsActivity extends AppCompatActivity {
 
+    /**
+     * Called on loading of the activity
+     * Fills the various {@link android.view.View}s with respective data
+     * fetches this data from the extras sent with the {@link Intent}
+     *
+     * @param savedInstanceState Bundle of data if the layout has previously been run
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

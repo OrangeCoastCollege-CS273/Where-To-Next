@@ -8,6 +8,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 
+/**
+ * Initializes a connection to a database
+ * Contains functionality to create, add, remove, and upgrade to the database
+ */
 class DBHelper extends SQLiteOpenHelper {
 
     //TASK 1: DEFINE THE DATABASE VERSION, NAME AND TABLE NAME
@@ -25,10 +29,18 @@ class DBHelper extends SQLiteOpenHelper {
     private static final String FIELD_IMAGE_NAME = "image_name";
 
 
+    /**
+     * Creates the database with context, name, and version
+     * @param context
+     */
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    /**
+     * Creates a table with the given fields and their types
+     * @param database databse to create table in
+     */
     @Override
     public void onCreate(SQLiteDatabase database) {
         // TODO:  Write code to create the database
@@ -43,6 +55,12 @@ class DBHelper extends SQLiteOpenHelper {
         database.execSQL(createTable);
     }
 
+    /**
+     * Called on upgrade of the database, deletes existing table and creates the table again
+     * @param database database to upgrade
+     * @param oldVersion Old version number
+     * @param newVersion New version number
+     */
     @Override
     public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
         // TODO:  Write code to upgrade the database
@@ -52,6 +70,11 @@ class DBHelper extends SQLiteOpenHelper {
 
     //********** DATABASE OPERATIONS:  ADD, GETALL
 
+    /**
+     * Adds a college to the database
+     *
+     * @param college College to be added
+     */
     public void addCollege(College college) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -67,6 +90,11 @@ class DBHelper extends SQLiteOpenHelper {
         college.setId(id);
     }
 
+    /**
+     * Pulls a list of all the colleges inputted into the database
+     *
+     * @return The list of all the colleges
+     */
     public ArrayList<College> getAllColleges() {
         ArrayList<College> collegeList = new ArrayList<>();
         SQLiteDatabase database = this.getReadableDatabase();
